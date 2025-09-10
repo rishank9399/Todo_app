@@ -1,89 +1,3 @@
-// import express from "express";
-// import mongoose from "mongoose";
-// import dotenv from "dotenv";
-// import Task from "./model/taskModel.js";
-
-// dotenv.config();
-// const app = express();
-// app.use(express.json());
-
-// mongoose.connect(process.env.MONGO_URL)
-//     .then(()=>{
-//         console.log("Connected to DB");
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//     })
-
-// app.get("/", (req, res) => {
-//     res.send("Root route");
-// })
-
-// app.post("/add", async (req, res) => {
-//     try{
-//         const { taskName, isDone } = req.body;
-
-//         const task = new Task({
-//             taskName,
-//             isDone,
-//         })
-
-//         await task.save();
-
-//         res.send("Task Saved");
-//     } catch(err) {
-//         console.log(err);
-//         res.send("Failed to save. An Error occured");
-//     }
-// })
-
-// app.get("/alltask", async (req, res) => {
-//     try{
-//         let data = await Task.find({});
-//         res.json(data);
-//     }
-//     catch(err) {
-//         console.log(err);
-//         res.send("Unable to fetch");
-//     }
-// })
-
-// app.delete("/delete/:id", async (req, res) => {
-//     try{
-//         const { id } = req.params;
-        
-//         const user = await Task.findByIdAndDelete(id)
-//         if(!user){
-//             return res.send("User doesn't exist");
-//         }
-//         console.log(user)
-//         res.json({ message: "Task Deleted", success: true });
-//     }
-//     catch(err) {
-//         console.log(err)
-//     }
-// })
-
-// app.post("/update/:id", async (req, res) => {
-//     try{
-//         const { id } = req.params;
-//         const { taskName, isDone } = req.body;
-        
-//         await Task.findByIdAndUpdate(
-//             id,
-//             {taskName, isDone}
-//         )
-//         res.json({ message: "Task Updated", success: true });
-//     }
-//     catch(err) {
-//         console.log(err)
-//     }
-// })
-
-// app.listen(8080, () => {
-//     console.log("Connected on port 8080")
-// })
-
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -93,7 +7,9 @@ import Task from "./model/taskModel.js";
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(cors()); // ✅ Allow frontend requests
+app.use(cors());
+
+const PORT = process.env.PORT || 8080;
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URL)
@@ -172,6 +88,6 @@ app.put("/update/:id", async (req, res) => {
 });
 
 // Start server
-app.listen(8080, () => {
-  console.log("Connected on port 8080");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
